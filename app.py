@@ -16,11 +16,11 @@ model = st.selectbox('Select desired model:', options=models )
 token_model = models[model]
 
 
-if 'current_model ' not in st.session_state:
-    st.session_state['current_model '] = model
+if 'current_model ' not in st.session_state or st.session_state['current_model'] != model:
+    st.session_state['current_model'] = model
     st.session_state['messages'] = [ ]
 
-model_name = st.session_state['current_model ']
+model_name = st.session_state['current_model']
 
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 url = f'https://api-inference.huggingface.co/models/{model_name}'
@@ -41,8 +41,7 @@ if user_input:
     headers = {'Authorization': f'Bearer {token}'}
 
     response = requests.post(url, json=json, headers=headers).json()
-    chatbot_message = response[0]['generated_text'].split('[/INST]')[-1]
-    print('Bot answer:', chatbot_message)
+    chatbot_message = response[0]['generated_text'].split(token_model)[-1]
     messages.append({'role':'assistant', 'content': chatbot_message })
      
 with area_chat.container():
