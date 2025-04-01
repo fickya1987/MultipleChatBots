@@ -8,8 +8,8 @@ dotenv.load_dotenv()
 token = os.environ['HF_TOKEN']
 
 models = {
-    'mistralai/Mixtral-8x7B-Instruct-v0.1' : '[/INST]',
-    'google/gemma-7b-it': '<start_of_turn>model\n',
+    'google/gemma-3-12b-it' : '[/INST]',
+    'google/gemma-3-27b-it': '<start_of_turn>model\n',
 }
 
 model = st.selectbox('Select desired model:', options=models )
